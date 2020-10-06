@@ -6,7 +6,7 @@ const Activity = () => {
     const [activity, setActivity] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/sector')
+        fetch('https://warm-eyrie-46552.herokuapp.com/sector')
             .then(res => res.json())
             .then(data => setActivity(data))
     }, [])

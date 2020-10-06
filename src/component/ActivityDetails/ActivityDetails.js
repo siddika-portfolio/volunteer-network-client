@@ -7,7 +7,7 @@ const ActivityDetails = (props) => {
     const history = useHistory();
 
     const handleDelete = (key) => {
-        fetch('http://localhost:5000/delete/' + key, {
+        fetch('https://warm-eyrie-46552.herokuapp.com/delete/' + key, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'

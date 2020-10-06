@@ -8,7 +8,7 @@ const PeopleEvent = () => {
 
     const handleAddWorks = () => {
         const work = {}
-        fetch('http://localhost:5000/addWorks', {
+        fetch('https://warm-eyrie-46552.herokuapp.com/addWorks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ const PeopleEvent = () => {
     }
 
     const handleAddSector = () => {
-        fetch('http://localhost:5000/addSector', {
+        fetch('https://warm-eyrie-46552.herokuapp.com/addSector', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

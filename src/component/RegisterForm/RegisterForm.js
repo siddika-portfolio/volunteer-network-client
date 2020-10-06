@@ -23,7 +23,7 @@ const RegisterForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newRegistration = { ...loggedInUser }
-        fetch('http://localhost:5000/addOrder', {
+        fetch('https://warm-eyrie-46552.herokuapp.com/addOrder', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newRegistration)
