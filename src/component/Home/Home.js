@@ -8,7 +8,7 @@ const Home = () => {
     const [post, setPost] = useState([]);
     
     useEffect(() => {
-        fetch('https://warm-eyrie-46552.herokuapp.com//works')
+        fetch('https://warm-eyrie-46552.herokuapp.com/works')
         .then(res => res.json())
         .then(data => setWorks(data))
     } ,[])
