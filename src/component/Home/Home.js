@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container, FormControl, InputGroup } from 'react-bootstrap';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import VolunteerWorks from '../VolunteerWorks/VolunteerWorks';
-import './Home.css'
 
 const Home = () => {
     const [works, setWorks] = useState([]);
