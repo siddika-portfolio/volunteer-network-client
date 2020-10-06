@@ -1,77 +1,94 @@
-import { Card } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import logo from '../../images/logo.png'
+import Alert from '@material-ui/lab/Alert';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { UserContext } from '../../App';
-import volunteerWork from '../../fakeData/fakeData';
 import './RegisterForm.css';
 
 const RegisterForm = () => {
-    const {worksKey } = useParams();
-    console.log(worksKey);
-    // const [work, setWork] = useState({});
-    // console.log(work);
+    const [loggedInUser,setLoggedInUser] = useContext(UserContext);
 
-    // useEffect((e) => {
-    //     fetch('http://localhost:5000/works/'+ worksKey, {
-    //         method: 'POST',
-    //         headers: { 
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(work[0])
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => console.log(data))
-    // }, [worksKey])
+    const {name} = useParams();
+    const history = useHistory();
 
-    const { register, handleSubmit, watch, errors } = useForm();
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        date: '',
+        description: '',
+        organization: '',
+        success: ''
+    })
 
-    const onSubmit = (detail) => {
-        
-       const newOrder = {...loggedInUser, shipment: detail, orderTime: new Date()};
-       fetch('http://localhost:5000/addOrder',{
-           method: 'POST',
-           headers: {
-               'Content-Type': 'application/json'
-           },
-           body: JSON.stringify(newOrder)
-       })
-       .then(res => res.json())
-       .then(data => {
-           if(data){
-               alert('your order placed successfully')
-           }
-       })
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newRegistration = { ...loggedInUser }
+        fetch('http://localhost:5000/addOrder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newRegistration)
+        })
+        .then(res => res.json())
+        .then(data => {
+            user.success = "Registration Successful"
+            history.push('/donation')
+            console.log(loggedInUser)
+        })
+
     }
-  
+
+    const handleChange = (e) => {
+
+        let isFieldValid = true;
+        if (e.target.name === 'email') {
+            isFieldValid = /\S+@\S+\.\S+/.test(e.target.value);
+        }
+        if (isFieldValid) {
+            const newUserInfo = { ...loggedInUser };
+            newUserInfo[e.target.name] = e.target.value;
+            setLoggedInUser(newUserInfo);
+        }
+    }
 
     return (
-        <Container>
-            <Card style={{ width: '35rem', height: '32rem' }}>
-                <h2 className="p-4">Register as a volunteer</h2>
-                <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="RegisterVolunteer">
+            <div className="success__alert">
+            {
+                user.success ? <Alert severity="success"> Registration Successful — check it out!</Alert> : user.success = ""
+            }
+            </div>
 
-                    <input name="name" defaultValue={loggedInUser.name} ref={register({ required: true })} placeholder="Full Name" />
-                    {errors.name && <span className="error">Name is required</span>}
+            <Link to="/"> <img className="logo" src={logo} alt="" /> </Link>
+            
 
-                    <input name="email" defaultValue={loggedInUser.email} ref={register({ required: true })} placeholder="Username or Email" />
-                    {errors.email && <span className="error">Email is required</span>}
+            
+                <form onSubmit={handleSubmit} action="">
+                    <h2> Register as a Volunteer </h2>
+                    <input type="text" name="name" onChange={handleChange} placeholder="Full Name" id="" value={loggedInUser.name} required/>
 
-                    <input name="date" ref={register({ required: true })} placeholder="Date" />
-                    {errors.date && <span className="error">Date is required</span>}
+                    <input type="text" name="email" onChange={handleChange} placeholder="Username or Email" id="" value={loggedInUser.email} required/>
 
-                    <input name="description" ref={register({ required: true })} placeholder="Description" />
-                    {errors.description && <span className="error">description is required</span>}
+                    <input type="date" name="date" onChange={handleChange} id="" required/>
 
-                    <input name="organize books" ref={register({ required: true })} placeholder="Organize" />
-                    {errors.organize && <span className="error">{}</span>}
+                    <input type="text" name="description" onChange={handleChange} placeholder="Description" id=""  required/>
 
-                    <input type="submit" />
+                    <input type="text" name="organization" placeholder="Organize books at the library." id="" value={name} required/>
+
+                    <input 
+                        style={{ 
+                            background: "#3F90FC", 
+                            height: "35px", color: "white", 
+                            marginTop: "60px",paddingBottom:'35px', 
+                            fontSize: "1.2rem" ,
+                            borderRadius: "5px"
+                        }}
+                        type="submit"
+                        value="Registration"
+                        
+                    />
                 </form>
-            </Card>
-        </Container>
+            
+        </div>
     );
 };
 

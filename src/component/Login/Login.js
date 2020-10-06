@@ -48,7 +48,7 @@ const Login = () => {
     return (
         <div>
              <NavigationBar></NavigationBar>
-            <Container>
+            <Container className="mt-5">
                 <Card style={{ width: '28rem', height: '22rem' }}>
                     <h2 className="p-5">Login With</h2>
                     {

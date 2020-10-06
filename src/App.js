@@ -38,15 +38,15 @@ function App() {
           <PrivateRoute path="/registerForm">
             <RegisterForm></RegisterForm>
           </PrivateRoute>
-          <Route path="/donation">
+          <PrivateRoute path="/donation">
             <Activity></Activity>
-          </Route>
-          <PrivateRoute path="/works/:worksKey">
-            <RegisterForm></RegisterForm>
           </PrivateRoute>
-          <Route path="/event">
-            <PeopleEvent></PeopleEvent>
+          <Route path="/work/:name">
+            <RegisterForm></RegisterForm>
           </Route>
+          <PrivateRoute path="/event">
+            <PeopleEvent></PeopleEvent>
+          </PrivateRoute>
           <Route exact path="/">
             <Home></Home>
           </Route>
